@@ -12,7 +12,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [registerOk, setRegisterOk] = useState(false);
   const [register, setRegister] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleRegister() {
     const promise = axios.post(
@@ -25,15 +25,14 @@ export default function Register() {
       }
     );
     promise.then((res) => {
-      setRegisterOk(true)
-     navigate("/")
-    
+      setRegisterOk(true);
+      navigate("/");
     });
 
     promise.catch((err) => {
       alert(err.response.data.details);
-      setRegister(false)
-    })
+      setRegister(false);
+    });
 
     setRegister(true);
   }
@@ -43,51 +42,59 @@ export default function Register() {
       <RegisterContainer>
         <img src={logo} alt="logo"></img>
         <StyledForm>
-          <input 
-          disabled={register && !registerOk ? true: false}
+          <input
+            data-identifier="input-email"
+            disabled={register && !registerOk ? true : false}
             type="email"
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           ></input>
           <input
-           disabled={register && !registerOk? true: false}
+            data-identifier="input-password"
+            disabled={register && !registerOk ? true : false}
             type="password"
             placeholder="senha"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           ></input>
           <input
-           disabled={register && !registerOk? true: false}
+            data-identifier="input-name"
+            disabled={register && !registerOk ? true : false}
             type="text"
             placeholder="nome"
             onChange={(e) => setName(e.target.value)}
             value={name}
           ></input>
           <input
-           disabled={register && !registerOk ? true: false}
+            data-identifier="input-photo"
+            disabled={register && !registerOk ? true : false}
             type="url"
             placeholder="foto"
             onChange={(e) => setImage(e.target.value)}
             value={image}
           ></input>
           {register && !registerOk ? (
-           <div><ThreeDots
-           height="80"
-           width="80"
-           radius="9"
-           color="#fff"
-           ariaLabel="three-dots-loading"
-           wrapperStyle={{}}
-           wrapperClassName=""
-           visible={true}
-         /></div> 
+            <div>
+              <ThreeDots
+                height="80"
+                width="80"
+                radius="9"
+                color="#fff"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+              />
+            </div>
           ) : (
             <div onClick={() => handleRegister()}>Cadastrar</div>
           )}
         </StyledForm>
         <Link to="/">
-          <p>Já tem uma conta? Faça login!</p>
+          <p data-identifier="back-to-login-action">
+            Já tem uma conta? Faça login!
+          </p>
         </Link>
       </RegisterContainer>
     </>
@@ -142,9 +149,9 @@ const StyledForm = styled.form`
       outline: none;
     }
 
-    &:disabled{
+    &:disabled {
       color: #dbdbdb;
-      background-color: #F2F2F2;
+      background-color: #f2f2f2;
     }
   }
 
