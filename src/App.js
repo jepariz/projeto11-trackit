@@ -5,13 +5,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyContext from "./contexts/MyContext"
 import { useState } from "react";
 import Today from "./pages/Today";
+import Habits from "./pages/Habits";
 
 function App() {
 
   const [image, setImage] = useState("")
   const [progress, setProgress] = useState("")
   const [email, setEmail] = useState("")
-  
+
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
         <Route path="/hoje" element={<Today />} />
+        <Route path="/habitos" element={<Habits />} />
         </Routes>
         </MyContext.Provider>
       </BrowserRouter>
