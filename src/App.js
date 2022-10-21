@@ -10,6 +10,8 @@ function App() {
 
   const [image, setImage] = useState("")
   const [progress, setProgress] = useState("")
+  const [email, setEmail] = useState("")
+  
 
 
 
@@ -17,7 +19,7 @@ function App() {
     <>
       <BrowserRouter>
         <GlobalStyle />
-        <MyContext.Provider value={{image, setImage, progress, setProgress}}>
+        <MyContext.Provider value={{email, setEmail, image, setImage, progress, setProgress}}>
         <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />

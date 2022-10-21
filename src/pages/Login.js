@@ -9,12 +9,11 @@ import { ThreeDots } from "react-loader-spinner";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, setLogin] = useState(false)
-
+  const [login, setLogin] = useState(false);
 
   const { image, setImage } = useContext(MyContext);
   const navigate = useNavigate();
-
+ 
   function handleLogin() {
     const promise = axios.post(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
@@ -25,16 +24,16 @@ export default function Login() {
     );
     promise.then((res) => {
       console.log(res.data);
-      setImage(res.data.image)
-      navigate("/hoje")
+      setImage(res.data.image);
+      navigate("/hoje");
     });
 
     promise.catch((err) => {
       alert(err.response.data.message);
-      setLogin(false)
+      setLogin(false);
     });
 
-    setLogin(true)
+    setLogin(true);
   }
 
   return (
@@ -42,6 +41,7 @@ export default function Login() {
       <img src={logo} alt="logo"></img>
       <StyledForm>
         <input
+          data-identifier="input-email"
           disabled={login ? true : false}
           type="email"
           placeholder="email"
@@ -49,27 +49,34 @@ export default function Login() {
           value={email}
         ></input>
         <input
-         disabled={login ? true : false}
+          data-identifier="input-password"
+          disabled={login ? true : false}
           type="password"
           placeholder="senha"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         ></input>
-       {login ? <div>
-              <ThreeDots
-                height="80"
-                width="80"
-                radius="9"
-                color="#fff"
-                ariaLabel="three-dots-loading"
-                wrapperStyle={{}}
-                wrapperClassName=""
-                visible={true}
-              />
-            </div> :  <div onClick={handleLogin}>Entrar</div> }
+        {login ? (
+          <div data-identifier="login-btn">
+            <ThreeDots
+              height="80"
+              width="80"
+              radius="9"
+              color="#fff"
+              ariaLabel="three-dots-loading"
+              wrapperStyle={{}}
+              wrapperClassName=""
+              visible={true}
+            />
+          </div>
+        ) : (
+          <div data-identifier="login-btn" onClick={handleLogin}>
+            Entrar
+          </div>
+        )}
       </StyledForm>
       <Link to={"/cadastro"}>
-        <p>Não tem uma conta? Cadastre-se!</p>
+        <p data-identifier="sign-up-action">Não tem uma conta? Cadastre-se!</p>
       </Link>
     </LoginContainer>
   );
