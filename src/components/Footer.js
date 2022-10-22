@@ -4,7 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
-  const percentage = 66;
+  const percentage = 0;
 
   return (
     <StyledFooter>

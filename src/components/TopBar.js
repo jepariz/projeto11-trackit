@@ -9,7 +9,7 @@ export default function TopBar() {
   return (
     <StyledTopBar>
     <h1>TrackIt</h1>
-    <img src={image}></img>
+    <img src={image} alt="avatar do usuário"></img>
     </StyledTopBar>
   )
 }

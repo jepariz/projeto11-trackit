@@ -11,7 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState(false);
 
-  const { image, setImage } = useContext(MyContext);
+  const {setImage, setToken } = useContext(MyContext);
   const navigate = useNavigate();
  
   function handleLogin() {
@@ -25,6 +25,7 @@ export default function Login() {
     promise.then((res) => {
       console.log(res.data);
       setImage(res.data.image);
+      setToken(res.data.token)
       navigate("/hoje");
     });
 
