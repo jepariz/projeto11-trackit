@@ -31,28 +31,6 @@ export default function Habits() {
     });
   }, []);
 
-
-  function showCards() {
-    if (habitList.length !== 0) {
-      return <RegisteredHabit />;
-    }
-
-    if (habitList.length !== 0 && habit) {
-      return (
-        <>
-          <NewHabit />
-          <RegisteredHabit />
-        </>
-      );
-    }
-
-    if (habitList.length === 0) {
-      return <HabitMessage />;
-    }
-  }
-
-  console.log(habit);
-
   return (
     <>
       <TopBar />
