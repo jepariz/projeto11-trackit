@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import MyContext from "../contexts/MyContext";
 import trash from "../assets/trash.png";
 import axios from "axios";
@@ -17,10 +17,8 @@ export default function RegisteredHabit() {
       axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, {headers: {
       Authorization: `Bearer ${token}`,
     }})
-        .then(console.log("deletado"));
+        .then(setHabitList(habitList.filter((h) => h.id !== id)));
     }
-
-    setHabitList(habitList.filter((h) => h.id !== id))
     
 };
 

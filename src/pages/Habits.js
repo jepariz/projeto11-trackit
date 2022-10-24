@@ -2,15 +2,56 @@ import Footer from "../components/Footer";
 import TopBar from "../components/TopBar";
 import HabitMessage from "../components/HabitMessage";
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import MyContext from "../contexts/MyContext";
 import RegisteredHabit from "../components/RegisteredHabit";
 import NewHabit from "../components/NewHabit";
+import axios from "axios";
 
 export default function Habits() {
-
-  const { habit, setHabit} = useContext(MyContext);
+  const { token, habit, setHabit, habitList, setHabitList } =
+    useContext(MyContext);
   const [registeredHabit, setRegisteredHabit] = useState(false);
+
+  useEffect(() => {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    promise.then((res) => {
+      setHabitList(res.data);
+    });
+
+    promise.catch((err) => {
+      alert(err.response.data.message);
+    });
+  }, []);
+
+
+  function showCards() {
+    if (habitList.length !== 0) {
+      return <RegisteredHabit />;
+    }
+
+    if (habitList.length !== 0 && habit) {
+      return (
+        <>
+          <NewHabit />
+          <RegisteredHabit />
+        </>
+      );
+    }
+
+    if (habitList.length === 0) {
+      return <HabitMessage />;
+    }
+  }
+
+  console.log(habit);
 
   return (
     <>
@@ -20,15 +61,13 @@ export default function Habits() {
           <h2>Meus hábitos</h2>
           <button onClick={() => setHabit(true)}>+</button>
         </AddHabit>
-        {habit && !registeredHabit ? (
+        {habitList.length !== 0 ? 
+        habit ?  <><NewHabit /> <RegisteredHabit /></> : <RegisteredHabit /> : 
+        habit ? (
           <>
-            <NewHabit setRegisteredHabit={setRegisteredHabit} />
-            <HabitMessage />
+            <NewHabit /> <HabitMessage/>
           </>
-        ) : registeredHabit ?  <RegisteredHabit/> : (
-          <HabitMessage />
-        )}
-
+        ) : <HabitMessage/> }
       </HabitsContainer>
       <Footer />
     </>
@@ -63,5 +102,3 @@ const AddHabit = styled.div`
     color: #fff;
   }
 `;
-
-

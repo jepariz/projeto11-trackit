@@ -5,12 +5,13 @@ import { useState, useContext } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Days from "./Days";
 
-export default function NewHabit({ setRegisteredHabit }) {
+export default function NewHabit() {
   const [habitName, setHabitName] = useState("");
   const [sendHabit, setSendHabit] = useState(false);
   const [selectedDay, setSelectedDay] = useState([]);
 
   const { token, setHabit, setHabitList, habitList } = useContext(MyContext);
+
 
   function sendNewHabit() {
     const promise = axios.post(
@@ -27,9 +28,8 @@ export default function NewHabit({ setRegisteredHabit }) {
     );
 
     promise.then((res) => {
-      setRegisteredHabit(true);
       setHabitName("");
-      setHabit(false);
+     setHabit(false)
       setSendHabit(false);
       setSelectedDay([]);
       createHabitCard();
@@ -53,8 +53,7 @@ export default function NewHabit({ setRegisteredHabit }) {
     );
     promise.then((res) => {
       setHabitList(res.data);
-
-      
+    
     });
 
     promise.catch((err) => {
