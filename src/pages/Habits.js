@@ -25,15 +25,10 @@ export default function Habits() {
             <NewHabit setRegisteredHabit={setRegisteredHabit} />
             <HabitMessage />
           </>
-        ) : registeredHabit ? "" : (
+        ) : registeredHabit ?  <RegisteredHabit/> : (
           <HabitMessage />
         )}
-        <RegisteredHabit/>
-        {/* <HabitCard>
-          <p>{habitData.name}</p>
-          <img src={trash}></img>
-          {weekDays.map((d, index) => <Day days={habitData.days.includes(index)} key={index}>{d}</Day>)}
-        </HabitCard> */}
+
       </HabitsContainer>
       <Footer />
     </>
@@ -42,8 +37,8 @@ export default function Habits() {
 
 const HabitsContainer = styled.div`
   margin-top: 80px;
+  margin-bottom: 85px;
   width: 100%;
-  height: 600px;
   box-sizing: border-box;
   padding: 20px;
 `;

@@ -12,6 +12,8 @@ function App() {
   const [progress, setProgress] = useState("");
   const [token, setToken] = useState("");
   const [habit, setHabit] = useState(false);
+  const [habitList, setHabitList] = useState([])
+
 
   return (
     <>
@@ -27,6 +29,8 @@ function App() {
             setToken,
             habit,
             setHabit,
+            setHabitList,
+            habitList
           }}
         >
           <Routes>

@@ -1,51 +1,45 @@
 import styled from "styled-components";
-import {useContext } from "react";
+import { useContext, useEffect } from "react";
 import MyContext from "../contexts/MyContext";
+import trash from "../assets/trash.png";
 import axios from "axios";
-import trash from "../assets/trash.png"
 
 export default function RegisteredHabit() {
-  
-  const { token} = useContext(MyContext);
+  const { token, habitList, setHabitList } = useContext(MyContext);
+  const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-function createHabitCard (){
 
- 
+  function deleteHabit(id) {
 
-  const promise = axios.get(
-    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-  promise.then((res) => {
-    console.log(res.data);
+    const status = window.confirm("Deseja deletar esta hábito?")
+
+    if(status){
+      axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, {headers: {
+      Authorization: `Bearer ${token}`,
+    }})
+        .then(console.log("deletado"));
+    }
+
+    setHabitList(habitList.filter((h) => h.id !== id))
     
-  });
-
-  promise.catch((err) => {
-    alert(err.response.data.message);
-   
-  });
-}
-
-
-
+};
 
   return (
-    <HabitCard>
-      <p>{}</p>
-      <img src={trash} alt="deletar"></img>
-      {/* {weekDays.map((d, index) => (
-        <Day days={habitData.days.includes(index)} key={index}>
-          {d}
-        </Day> */}
-      
-    </HabitCard>
+    <>
+      {habitList.map((h, index) => (
+        <HabitCard key={habitList[index].id}>
+          <p>{habitList[index].name}</p>
+          <img src={trash} alt="deletar" onClick={() => deleteHabit(habitList[index].id)}></img>
+          {weekDays.map((d, index) => (
+            <Day days={h.days.includes(index)} key={index}>
+              {d}
+            </Day>
+          ))}
+        </HabitCard>
+      ))}
+    </>
   );
 }
-
 
 const HabitCard = styled.div`
   width: 340px;
@@ -54,7 +48,7 @@ const HabitCard = styled.div`
   background-color: #fff;
   box-sizing: border-box;
   padding: 15px;
-  margin-top: 30px;
+  margin-top: 20px;
   position: relative;
 
   p {
@@ -63,7 +57,7 @@ const HabitCard = styled.div`
     margin-bottom: 10px;
   }
 
-  img{
+  img {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -81,7 +75,7 @@ const Day = styled.button`
   margin-right: 5px;
 
   &:disabled {
-      color: #dbdbdb;
-      background-color: #f2f2f2;
-    }
+    color: #dbdbdb;
+    background-color: #f2f2f2;
+  }
 `;

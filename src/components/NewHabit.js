@@ -10,7 +10,7 @@ export default function NewHabit({ setRegisteredHabit }) {
   const [sendHabit, setSendHabit] = useState(false);
   const [selectedDay, setSelectedDay] = useState([]);
 
-  const { token, setHabit} = useContext(MyContext);
+  const { token, setHabit, setHabitList, habitList } = useContext(MyContext);
 
   function sendNewHabit() {
     const promise = axios.post(
@@ -27,12 +27,12 @@ export default function NewHabit({ setRegisteredHabit }) {
     );
 
     promise.then((res) => {
-      console.log(res.data);
       setRegisteredHabit(true);
       setHabitName("");
       setHabit(false);
       setSendHabit(false);
       setSelectedDay([]);
+      createHabitCard();
     });
 
     promise.catch((err) => {
@@ -40,6 +40,27 @@ export default function NewHabit({ setRegisteredHabit }) {
     });
 
     setSendHabit(true);
+  }
+
+  function createHabitCard() {
+    const promise = axios.get(
+      "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    promise.then((res) => {
+      setHabitList(res.data);
+
+      
+    });
+
+    promise.catch((err) => {
+      alert(err.response.data.message);
+    });
+    setSendHabit(false);
   }
 
   return (
