@@ -2,9 +2,15 @@ import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
+import MyContext from "../contexts/MyContext";
+import { useContext} from "react";
 
 export default function Footer() {
-  const percentage = 0;
+
+  const { progress, habitData } = useContext(MyContext);
+ 
+  const total = habitData.length
+  const percentage = total / progress;
 
   return (
     <StyledFooter>
